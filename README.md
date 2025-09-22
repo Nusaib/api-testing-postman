@@ -10,7 +10,7 @@ Tujuan project ini:
 ---
 
 ## 🛠️ Tools
-- Postman vX.X.X  
+- Postman v11.64.0
 - Dummy API: https://reqres.in  
 
 ---
