@@ -54,9 +54,9 @@ Collection berisi 4 request utama:
 ---
 
 ## 🧪 Postman Tests (Assertions)
-In addition to sending requests, this collection also includes **automated tests** using Postman scripts.
+Sebagai tambahan dari mengirim request, collection ini juga mencakup **automated tests** menggunakan script Postman.
 
-Example (GET User):
+Contoh (GET User):
 ```javascript
 pm.test("Status code is 200", function () {
     pm.response.to.have.status(200);
