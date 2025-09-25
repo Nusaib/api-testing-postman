@@ -53,6 +53,22 @@ Collection berisi 4 request utama:
 
 ---
 
+## 🧪 Postman Tests (Assertions)
+In addition to sending requests, this collection also includes **automated tests** using Postman scripts.
+
+Example (GET User):
+```javascript
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response contains email field", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.data).to.have.property("email");
+});
+
+---
+
 ## 🔮 Next Step
 - Integrasi test case ke dalam **automation framework** (RestAssured/Playwright).  
 - Generate report hasil testing.  
