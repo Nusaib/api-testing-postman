@@ -66,6 +66,7 @@ pm.test("Response contains email field", function () {
     var jsonData = pm.response.json();
     pm.expect(jsonData.data).to.have.property("email");
 });
+```
 
 ---
 
