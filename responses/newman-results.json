@@ -1,0 +1,1948 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "12248fd0-02a6-4b8b-b059-781e1e6daf0e",
+      "exporter_id": "36385693"
+    },
+    "item": [
+      {
+        "id": "cbb136e0-7118-4967-8f76-39bb5a3eed3c",
+        "name": "https://reqres.in/api/users/2",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "f5229275-5a29-4bf3-b22e-29edff0c235e",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Status code is 200\", function () {\r",
+                "    pm.response.to.have.status(200);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Response has email field\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                "});\r",
+                "\r",
+                "pm.test(\"User ID is 2\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData.data.id).to.eql(2);\r",
+                "});\r",
+                ""
+              ],
+              "_lastExecutionId": "f0b76bad-8909-42e8-b90d-f76f96efc5af"
+            }
+          }
+        ]
+      },
+      {
+        "id": "36a77921-dba5-4f20-bfcd-37b2932bf8c1",
+        "name": "https://reqres.in/api/users",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"QA Engineer\"\r\n}\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "e29b77ad-721a-442b-85d9-899abacc5c27",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Status code is 201\", function () {\r",
+                "    pm.response.to.have.status(201);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Response contains name and job\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                "});\r",
+                ""
+              ],
+              "_lastExecutionId": "57967bc7-16b1-49ee-b30b-5f472a69bb7f"
+            }
+          }
+        ]
+      },
+      {
+        "id": "a9a1e4da-8bb5-49f1-82d5-99a6b0c9e7b4",
+        "name": "https://reqres.in/api/users/2",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "86092a37-475a-44e2-9f2d-089fc44d4e43",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Status code is 200\", function () {\r",
+                "    pm.response.to.have.status(200);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Response contains updatedAt\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                "});\r",
+                ""
+              ],
+              "_lastExecutionId": "1349580f-f66e-4f9b-b27f-2900dfd05903"
+            }
+          }
+        ]
+      },
+      {
+        "id": "3629776f-0ac3-48f2-ab6f-4b85993d5a44",
+        "name": "https://reqres.in/api/users/2",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n"
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "d6b2f7a4-4f77-4173-8065-73f7f36a364b",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Status code is 204\", function () {\r",
+                "    pm.response.to.have.status(204);\r",
+                "});"
+              ],
+              "_lastExecutionId": "9fb8ea9c-fcab-4583-b372-d16f3d4333f5"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [],
+    "variable": [],
+    "info": {
+      "_postman_id": "12248fd0-02a6-4b8b-b059-781e1e6daf0e",
+      "name": "API_Learning_01",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "description": {
+        "content": "Collection latihan dasar API Testing (GET, POST, PUT, DELETE) menggunakan ReqRes APIEndFragment",
+        "type": "text/plain"
+      }
+    }
+  },
+  "environment": {
+    "id": "69722397-fd7e-4a22-bd77-6b33b453fa78",
+    "values": []
+  },
+  "globals": {
+    "id": "f32206df-3164-40d8-bc6a-ed187d6e72a0",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 350.25,
+      "responseMin": 326,
+      "responseMax": 411,
+      "responseSd": 35.273042114339965,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1758814172813,
+      "completed": 1758814174557
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 4,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "9736d362-e052-4456-98d7-1dceed16f57d",
+          "httpRequestId": "cb8db5f0-9833-4e6e-9183-f4378a87f16e"
+        },
+        "item": {
+          "id": "cbb136e0-7118-4967-8f76-39bb5a3eed3c",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "2"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f5229275-5a29-4bf3-b22e-29edff0c235e",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has email field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User ID is 2\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "f0b76bad-8909-42e8-b90d-f76f96efc5af"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "2042fc95-31a6-4d54-a00b-43561011edaf",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "b10a427c-ee69-454e-8604-0171dc13bb3c",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 25 Sep 2025 15:29:32 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"152-ApQgGHL6RKwaebFlrPCYPBO1xHg\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "97"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "50"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=cRBUqkPNdV8fdI7fCUfE1MvqCkyCv99ckH4FwPTDUig%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1758812778\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=cRBUqkPNdV8fdI7fCUfE1MvqCkyCv99ckH4FwPTDUig%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1758812778\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "6d5312a8-6242-d5e6-6d40-0512f5e65c68"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Age",
+              "value": "1394"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "max-age=14400"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "HIT"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "984b8ec4b8748331-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              100,
+              97,
+              116,
+              97,
+              34,
+              58,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              101,
+              109,
+              97,
+              105,
+              108,
+              34,
+              58,
+              34,
+              106,
+              97,
+              110,
+              101,
+              116,
+              46,
+              119,
+              101,
+              97,
+              118,
+              101,
+              114,
+              64,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              34,
+              44,
+              34,
+              102,
+              105,
+              114,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              74,
+              97,
+              110,
+              101,
+              116,
+              34,
+              44,
+              34,
+              108,
+              97,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              87,
+              101,
+              97,
+              118,
+              101,
+              114,
+              34,
+              44,
+              34,
+              97,
+              118,
+              97,
+              116,
+              97,
+              114,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              47,
+              105,
+              109,
+              103,
+              47,
+              102,
+              97,
+              99,
+              101,
+              115,
+              47,
+              50,
+              45,
+              105,
+              109,
+              97,
+              103,
+              101,
+              46,
+              106,
+              112,
+              103,
+              34,
+              125,
+              44,
+              34,
+              115,
+              117,
+              112,
+              112,
+              111,
+              114,
+              116,
+              34,
+              58,
+              123,
+              34,
+              117,
+              114,
+              108,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              99,
+              97,
+              100,
+              100,
+              121,
+              46,
+              105,
+              111,
+              63,
+              117,
+              116,
+              109,
+              95,
+              115,
+              111,
+              117,
+              114,
+              99,
+              101,
+              61,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              38,
+              117,
+              116,
+              109,
+              95,
+              109,
+              101,
+              100,
+              105,
+              117,
+              109,
+              61,
+              106,
+              115,
+              111,
+              110,
+              38,
+              117,
+              116,
+              109,
+              95,
+              99,
+              97,
+              109,
+              112,
+              97,
+              105,
+              103,
+              110,
+              61,
+              114,
+              101,
+              102,
+              101,
+              114,
+              114,
+              97,
+              108,
+              34,
+              44,
+              34,
+              116,
+              101,
+              120,
+              116,
+              34,
+              58,
+              34,
+              84,
+              105,
+              114,
+              101,
+              100,
+              32,
+              111,
+              102,
+              32,
+              119,
+              114,
+              105,
+              116,
+              105,
+              110,
+              103,
+              32,
+              101,
+              110,
+              100,
+              108,
+              101,
+              115,
+              115,
+              32,
+              115,
+              111,
+              99,
+              105,
+              97,
+              108,
+              32,
+              109,
+              101,
+              100,
+              105,
+              97,
+              32,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              63,
+              32,
+              76,
+              101,
+              116,
+              32,
+              67,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              32,
+              67,
+              97,
+              100,
+              100,
+              121,
+              32,
+              103,
+              101,
+              110,
+              101,
+              114,
+              97,
+              116,
+              101,
+              32,
+              105,
+              116,
+              32,
+              102,
+              111,
+              114,
+              32,
+              121,
+              111,
+              117,
+              46,
+              34,
+              125,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 411,
+          "responseSize": 338
+        },
+        "id": "cbb136e0-7118-4967-8f76-39bb5a3eed3c",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response has email field",
+            "skipped": false
+          },
+          {
+            "assertion": "User ID is 2",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "7434b266-0b3c-4d3e-b7b6-a37a68ad75bf",
+          "length": 4,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "b2be4605-56e8-42f0-8fb1-a48e2a87a2e9"
+        },
+        "item": {
+          "id": "36a77921-dba5-4f20-bfcd-37b2932bf8c1",
+          "name": "https://reqres.in/api/users",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"QA Engineer\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "e29b77ad-721a-442b-85d9-899abacc5c27",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains name and job\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "57967bc7-16b1-49ee-b30b-5f472a69bb7f"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "3ae84de1-ded9-4b9c-af53-46e1bf173d68",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "49",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"QA Engineer\"\r\n}\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "be3f4ee9-d6ed-4e8e-9e09-05db7ca755e9",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 25 Sep 2025 15:29:33 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "85"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"55-xi4mMbz04YdPagTUK9OO9nxxkMM\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "92"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "22"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=j38zHGnHpBZtenyRLv4vNkKNcgr3yTIyKZIqicfRSTg%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1758814173\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=j38zHGnHpBZtenyRLv4vNkKNcgr3yTIyKZIqicfRSTg%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1758814173\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "a38fbfbd-d1ef-2724-7d30-2021def5a52a"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "984b8ec629b38331-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              83,
+              97,
+              115,
+              97,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              81,
+              65,
+              32,
+              69,
+              110,
+              103,
+              105,
+              110,
+              101,
+              101,
+              114,
+              34,
+              44,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              52,
+              51,
+              55,
+              34,
+              44,
+              34,
+              99,
+              114,
+              101,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              50,
+              53,
+              84,
+              49,
+              53,
+              58,
+              50,
+              57,
+              58,
+              51,
+              51,
+              46,
+              50,
+              52,
+              54,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 336,
+          "responseSize": 85
+        },
+        "id": "36a77921-dba5-4f20-bfcd-37b2932bf8c1",
+        "assertions": [
+          {
+            "assertion": "Status code is 201",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains name and job",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "e49570b2-3e44-4f74-8be5-8bda55cab9c4",
+          "length": 4,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "2a5a655f-67a6-489f-b8c7-67fd959b1361"
+        },
+        "item": {
+          "id": "a9a1e4da-8bb5-49f1-82d5-99a6b0c9e7b4",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "2"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "86092a37-475a-44e2-9f2d-089fc44d4e43",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains updatedAt\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "1349580f-f66e-4f9b-b27f-2900dfd05903"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "1d5deb6a-95ae-48af-ba97-d1c040726c2a",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "55",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "89dddd26-7e6d-461b-b482-a6853401179f",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 25 Sep 2025 15:29:33 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"50-uJgmiDzFvImRKcifbdipaK+7MXo\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "90"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "22"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=j38zHGnHpBZtenyRLv4vNkKNcgr3yTIyKZIqicfRSTg%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1758814173\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=j38zHGnHpBZtenyRLv4vNkKNcgr3yTIyKZIqicfRSTg%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1758814173\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "392d1104-2c97-0e0a-2cde-4334fd095df3"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "984b8ec8cc698331-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              83,
+              97,
+              115,
+              97,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              65,
+              117,
+              116,
+              111,
+              109,
+              97,
+              116,
+              105,
+              111,
+              110,
+              32,
+              84,
+              101,
+              115,
+              116,
+              101,
+              114,
+              34,
+              44,
+              34,
+              117,
+              112,
+              100,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              50,
+              53,
+              84,
+              49,
+              53,
+              58,
+              50,
+              57,
+              58,
+              51,
+              51,
+              46,
+              54,
+              55,
+              51,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 326,
+          "responseSize": 80
+        },
+        "id": "a9a1e4da-8bb5-49f1-82d5-99a6b0c9e7b4",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains updatedAt",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "ee6db7c4-39cd-4471-b6f4-1dba5b2ff0b5",
+          "length": 4,
+          "cycles": 1,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "8e098bef-4134-4ad4-8174-52fd89fef068"
+        },
+        "item": {
+          "id": "3629776f-0ac3-48f2-ab6f-4b85993d5a44",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "2"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n"
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "d6b2f7a4-4f77-4173-8065-73f7f36a364b",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "_lastExecutionId": "9fb8ea9c-fcab-4583-b372-d16f3d4333f5"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "dbe0a497-e627-4ed6-a876-7285731d013e",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "55",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n"
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "c806d7e1-0534-4519-a679-937ab02b542e",
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 25 Sep 2025 15:29:34 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "88"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "21"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MncNoDaZAjK8meQjykL1Il%2B6gsMbKZliLLP7BSdWJUc%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1758814174\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=MncNoDaZAjK8meQjykL1Il%2B6gsMbKZliLLP7BSdWJUc%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1758814174\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "df66c1ce-2068-2a25-4ab0-1125e5f83727"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "984b8ecb5eb88331-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 328,
+          "responseSize": 0
+        },
+        "id": "3629776f-0ac3-48f2-ab6f-4b85993d5a44",
+        "assertions": [
+          {
+            "assertion": "Status code is 204",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 503
+    },
+    "failures": [],
+    "error": null
+  }
+}
