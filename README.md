@@ -70,6 +70,13 @@ pm.test("Response contains email field", function () {
 
 ---
 
+## ▶️ Run with Newman
+```bash
+newman run API_Learning_01.postman_collection.json -r json --reporter-json-export responses/newman-results.json
+```
+
+---
+
 ## 🔮 Next Step
 - Integrasi test case ke dalam **automation framework** (RestAssured/Playwright).  
 - Generate report hasil testing.  
