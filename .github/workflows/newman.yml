@@ -1,8 +1,16 @@
-name: Newman CI
-on: [push, pull_request]
+name: Newman CI (all week)
+on:
+  push:
+    paths:
+      - 'week1_reqres/' # jalan kalau ada perubahan di folder weekX
+      - '.github/workflows/newman.yml'
+  pull_request:
 jobs:
   run-newman:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        week_dir: [week1_reqres]   # tambah di sini kalau ada week baru
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -10,10 +18,10 @@ jobs:
           node-version: '20'
       - run: npm i -g newman newman-reporter-htmlextra
       - run: |
-          mkdir -p responses
-          newman run API_Learning_01.postman_collection.json -r cli,htmlextra,json --env-var existingUserId=2 --iteration-data data/users.csv --reporter-json-export responses/newman-results.json --reporter-htmlextra-export responses/newman-report.html
+          mkdir -p "${{ matrix.week_dir }}/responses"
+          newman run "${{ matrix.week_dir }}/API_Learning_01.postman_collection.json" -r cli,htmlextra,json --env-var existingUserId=2 --iteration-data "${{ matrix.week_dir }}/data/users.csv" --reporter-json-export "${{ matrix.week_dir }}/responses/newman-results.json" --reporter-htmlextra-export "${{ matrix.week_dir }}/responses/newman-report.html"
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
-          name: newman-reports
-          path: responses/
+          name: newman-reports-${{ matrix.week_dir }}
+          path: ${{ matrix.week_dir }}/responses/
