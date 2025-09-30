@@ -14,6 +14,7 @@ jobs:
           newman run API_Learning_01.postman_collection.json \
             -r cli,htmlextra,json \
             --env-var existingUserId=2 \ #injecting value because there is no initial value for var existingUserId
+            --iteration-data data/users.csv
             --reporter-json-export responses/newman-results.json \
             --reporter-htmlextra-export responses/newman-report.html
       - name: Upload report artifact
