@@ -1,0 +1,4612 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "12248fd0-02a6-4b8b-b059-781e1e6daf0e",
+      "exporter_id": "36385693"
+    },
+    "item": [
+      {
+        "id": "211f7f88-bb1d-4319-939f-cfdbe4b96d45",
+        "name": "https://reqres.in/api/users/{{existingUserId}}",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "{{existingUserId}}"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "formdata",
+            "formdata": []
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "21acf12b-d40f-47d6-9b2d-fa935d866f1d",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "const jsonData = pm.response.json();\r",
+                "const schema = {\r",
+                "  type: \"object\",\r",
+                "  properties: {\r",
+                "    data: {\r",
+                "      type: \"object\",\r",
+                "      properties: {\r",
+                "        id: { type: \"number\" },\r",
+                "        // email: { type: \"string\" },\r",
+                "        first_name: { type: \"string\" }\r",
+                "      },\r",
+                "      required: [\"id\",\"first_name\"]\r",
+                "    }\r",
+                "  },\r",
+                "  required: [\"data\"]\r",
+                "};\r",
+                "\r",
+                "const body = pm.response.json();\r",
+                "\r",
+                "pm.test(\"Name sesuai input\", () => {\r",
+                "  const j = pm.response.json();\r",
+                "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Schema valid\", () => {\r",
+                "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Status code is 200\", function () {\r",
+                "    pm.response.to.have.status(200);\r",
+                "});\r",
+                "\r",
+                "// pm.test(\"Response has email field\", function () {\r",
+                "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                "// });\r",
+                "\r",
+                "// pm.test(\"User ID is 2\", function () {\r",
+                "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                "// });"
+              ],
+              "_lastExecutionId": "b0797399-e9b2-458e-9e01-87eeea023d63"
+            }
+          },
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "9b34e559-bf2e-491c-ac61-a7d7f49767ae",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.expect(pm.variables.get(\"existingUserId\"), \"existingUserId must be set\").to.be.ok;\r",
+                "if (!pm.collectionVariables.get(\"existingUserId\")) {\r",
+                "  pm.collectionVariables.set(\"existingUserId\", \"2\");\r",
+                "}"
+              ],
+              "_lastExecutionId": "13d5e213-74a7-42bd-aba2-fac32e70e666"
+            }
+          }
+        ],
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        }
+      },
+      {
+        "id": "d76e14ff-14aa-43d8-8018-7aea15340483",
+        "name": "https://reqres.in/api/users",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }\r\n\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "302f63b1-8aeb-44d7-b978-3e19f06cec45",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "const schema = {\r",
+                "  type: \"object\",\r",
+                "  properties: {\r",
+                "    name: { type: \"string\" },\r",
+                "    job: { type: \"string\" },\r",
+                "    id: { type: \"string\" },          // di ReqRes id = string\r",
+                "    createdAt: { type: \"string\" }\r",
+                "  },\r",
+                "  required: [\"name\", \"job\", \"id\", \"createdAt\"]\r",
+                "};\r",
+                "\r",
+                "const j = pm.response.json();\r",
+                "// Di POST Create User (Tests)\r",
+                "pm.collectionVariables.set(\"newUserId\", j.id);\r",
+                "console.log(\"Set newUserId (collection):\", j.id);\r",
+                "// pm.test(\"Name matches CSV\", () => pm.expect(j.name).to.eql(pm.iterationData.get(\"name\")));\r",
+                "// pm.test(\"Job matches CSV\",  () => pm.expect(j.job).to.eql(pm.iterationData.get(\"job\")));\r",
+                "\r",
+                "const body = pm.response.json();\r",
+                "\r",
+                "pm.test(\"Schema valid\", () => {\r",
+                "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Status code is 201\", function () {\r",
+                "    pm.response.to.have.status(201);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Response contains name and job\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                "});"
+              ],
+              "_lastExecutionId": "76dfd426-9623-4708-b403-6792d45c5eb4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "0e2cedb1-e80e-4d6c-aee0-9b3929baf804",
+        "name": "https://reqres.in/api/users/{{newUserId}}",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "{{newUserId}}"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "raw",
+            "raw": "",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "fec97cd1-8b58-42ec-8779-112788b1a481",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "const jsonData = pm.response.json();\r",
+                "// const schema = {\r",
+                "//   type: \"object\",\r",
+                "//   properties: {\r",
+                "//     data: {\r",
+                "//       type: \"object\",\r",
+                "//       properties: {\r",
+                "//         id: { type: \"number\" },\r",
+                "//         email: { type: \"string\" },\r",
+                "//         first_name: { type: \"string\" }\r",
+                "//       },\r",
+                "//       required: [\"id\",\"email\",\"first_name\"]\r",
+                "//     }\r",
+                "//   },\r",
+                "//   required: [\"data\"]\r",
+                "// };\r",
+                "\r",
+                "const body = pm.response.json();\r",
+                "\r",
+                "pm.test(\"Name sesuai input\", () => {\r",
+                "  const j = pm.response.json();\r",
+                "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                "});\r",
+                "\r",
+                "\r",
+                "// pm.test(\"Schema valid\", () => {\r",
+                "//   pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                "// });\r",
+                "\r",
+                "// pm.test(\"Response has email field\", function () {\r",
+                "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                "// });\r",
+                "\r",
+                "// pm.test(\"User ID is 2\", function () {\r",
+                "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                "// });\r",
+                "\r",
+                "pm.test(\"Created user is not persisted (404 expected)\", () => {\r",
+                "  pm.response.to.have.status(404);\r",
+                "});\r",
+                ""
+              ],
+              "_lastExecutionId": "ca8b946a-1e19-4879-9ab9-bd1d9a829cbc"
+            }
+          }
+        ],
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        }
+      },
+      {
+        "id": "acf5fa68-f4eb-4abf-912d-1a7875da69fd",
+        "name": "https://reqres.in/api/users/2",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              ""
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "c7a2c219-1e5c-4085-90fa-ececc09ecc1d",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "const schema = {\r",
+                "  type: \"object\",\r",
+                "  properties: {\r",
+                "    name: { type: \"string\" },\r",
+                "    job: { type: \"string\" },\r",
+                "    updatedAt: { type: \"string\" }\r",
+                "  },\r",
+                "  required: [\"name\", \"job\", \"updatedAt\"]\r",
+                "};\r",
+                "\r",
+                "const body = pm.response.json();\r",
+                "\r",
+                "pm.test(\"Schema valid\", () => {\r",
+                "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Status code is 200\", function () {\r",
+                "    pm.response.to.have.status(200);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Response contains updatedAt\", function () {\r",
+                "    var jsonData = pm.response.json();\r",
+                "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                "});\r",
+                "\r",
+                "// pm.test(\"Status 404 for user not found\", function () {\r",
+                "//   pm.response.to.have.status(404);\r",
+                "// });"
+              ],
+              "_lastExecutionId": "993032db-939f-42b7-b5e3-a4f409e37d84"
+            }
+          }
+        ]
+      },
+      {
+        "id": "8e723ed3-4506-48f4-8ecf-080ead92ef4b",
+        "name": "https://reqres.in/api/users/2",
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }"
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "c8713e7b-19ef-49c0-90d7-278ffa38f2e4",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Status code is 204\", function () {\r",
+                "    pm.response.to.have.status(204);\r",
+                "});"
+              ],
+              "_lastExecutionId": "80bf39f1-ac0f-4b17-a472-3362961bf92b"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "edaf9326-e58f-403b-98dc-68d1c95d9d45",
+          "type": "text/javascript",
+          "packages": {},
+          "exec": [
+            ""
+          ],
+          "_lastExecutionId": "8f61fdf4-05a2-45bf-b7c8-2ce3bea3b0fb"
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "fd74ce60-45da-4301-bde9-a90e4a00370c",
+          "type": "text/javascript",
+          "packages": {},
+          "exec": [
+            ""
+          ],
+          "_lastExecutionId": "8df98d93-f5cc-4d0e-8602-02ccf418260b"
+        }
+      }
+    ],
+    "variable": [
+      {
+        "type": "any",
+        "value": "",
+        "key": "existingUserId"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "newUserId"
+      }
+    ],
+    "info": {
+      "_postman_id": "12248fd0-02a6-4b8b-b059-781e1e6daf0e",
+      "name": "API_Learning_01",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "description": {
+        "content": "Collection latihan dasar API Testing (GET, POST, PUT, DELETE) menggunakan ReqRes APIEndFragment",
+        "type": "text/plain"
+      }
+    }
+  },
+  "environment": {
+    "id": "a201d6ca-0000-4a7b-a7b9-866679b5f71c",
+    "values": [
+      {
+        "type": "any",
+        "value": "2",
+        "key": "existingUserId"
+      }
+    ]
+  },
+  "globals": {
+    "id": "12ccb4ee-be54-4889-ad9e-f18075889f01",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 32,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 24,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 20,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 12,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 326.6,
+      "responseMin": 87,
+      "responseMax": 570,
+      "responseSd": 140.42663565007888,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1759240212068,
+      "completed": 1759240216222
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 5,
+          "cycles": 2,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "ccb8b2dc-dea0-4090-840b-440d5e96cc50",
+          "httpRequestId": "4d669f09-209f-426c-a979-0faeb03e8505"
+        },
+        "item": {
+          "id": "211f7f88-bb1d-4319-939f-cfdbe4b96d45",
+          "name": "https://reqres.in/api/users/{{existingUserId}}",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "{{existingUserId}}"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "21acf12b-d40f-47d6-9b2d-fa935d866f1d",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const jsonData = pm.response.json();\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    data: {\r",
+                  "      type: \"object\",\r",
+                  "      properties: {\r",
+                  "        id: { type: \"number\" },\r",
+                  "        // email: { type: \"string\" },\r",
+                  "        first_name: { type: \"string\" }\r",
+                  "      },\r",
+                  "      required: [\"id\",\"first_name\"]\r",
+                  "    }\r",
+                  "  },\r",
+                  "  required: [\"data\"]\r",
+                  "};\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Name sesuai input\", () => {\r",
+                  "  const j = pm.response.json();\r",
+                  "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// pm.test(\"Response has email field\", function () {\r",
+                  "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"User ID is 2\", function () {\r",
+                  "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "// });"
+                ],
+                "_lastExecutionId": "b0797399-e9b2-458e-9e01-87eeea023d63"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "9b34e559-bf2e-491c-ac61-a7d7f49767ae",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.expect(pm.variables.get(\"existingUserId\"), \"existingUserId must be set\").to.be.ok;\r",
+                  "if (!pm.collectionVariables.get(\"existingUserId\")) {\r",
+                  "  pm.collectionVariables.set(\"existingUserId\", \"2\");\r",
+                  "}"
+                ],
+                "_lastExecutionId": "13d5e213-74a7-42bd-aba2-fac32e70e666"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a1313b7f-1c91-4aaf-b657-5cec83ad41e2",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "formdata",
+            "formdata": []
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "6e2c65c9-f20f-4d40-88a5-5ab9bdd3c652",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:11 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"152-ApQgGHL6RKwaebFlrPCYPBO1xHg\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "98"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "60"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240211\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240211\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "5a26cf50-c526-16fb-da95-6d573d98a978"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "max-age=14400"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "MISS"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "987430186e685c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              100,
+              97,
+              116,
+              97,
+              34,
+              58,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              101,
+              109,
+              97,
+              105,
+              108,
+              34,
+              58,
+              34,
+              106,
+              97,
+              110,
+              101,
+              116,
+              46,
+              119,
+              101,
+              97,
+              118,
+              101,
+              114,
+              64,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              34,
+              44,
+              34,
+              102,
+              105,
+              114,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              74,
+              97,
+              110,
+              101,
+              116,
+              34,
+              44,
+              34,
+              108,
+              97,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              87,
+              101,
+              97,
+              118,
+              101,
+              114,
+              34,
+              44,
+              34,
+              97,
+              118,
+              97,
+              116,
+              97,
+              114,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              47,
+              105,
+              109,
+              103,
+              47,
+              102,
+              97,
+              99,
+              101,
+              115,
+              47,
+              50,
+              45,
+              105,
+              109,
+              97,
+              103,
+              101,
+              46,
+              106,
+              112,
+              103,
+              34,
+              125,
+              44,
+              34,
+              115,
+              117,
+              112,
+              112,
+              111,
+              114,
+              116,
+              34,
+              58,
+              123,
+              34,
+              117,
+              114,
+              108,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              99,
+              97,
+              100,
+              100,
+              121,
+              46,
+              105,
+              111,
+              63,
+              117,
+              116,
+              109,
+              95,
+              115,
+              111,
+              117,
+              114,
+              99,
+              101,
+              61,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              38,
+              117,
+              116,
+              109,
+              95,
+              109,
+              101,
+              100,
+              105,
+              117,
+              109,
+              61,
+              106,
+              115,
+              111,
+              110,
+              38,
+              117,
+              116,
+              109,
+              95,
+              99,
+              97,
+              109,
+              112,
+              97,
+              105,
+              103,
+              110,
+              61,
+              114,
+              101,
+              102,
+              101,
+              114,
+              114,
+              97,
+              108,
+              34,
+              44,
+              34,
+              116,
+              101,
+              120,
+              116,
+              34,
+              58,
+              34,
+              84,
+              105,
+              114,
+              101,
+              100,
+              32,
+              111,
+              102,
+              32,
+              119,
+              114,
+              105,
+              116,
+              105,
+              110,
+              103,
+              32,
+              101,
+              110,
+              100,
+              108,
+              101,
+              115,
+              115,
+              32,
+              115,
+              111,
+              99,
+              105,
+              97,
+              108,
+              32,
+              109,
+              101,
+              100,
+              105,
+              97,
+              32,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              63,
+              32,
+              76,
+              101,
+              116,
+              32,
+              67,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              32,
+              67,
+              97,
+              100,
+              100,
+              121,
+              32,
+              103,
+              101,
+              110,
+              101,
+              114,
+              97,
+              116,
+              101,
+              32,
+              105,
+              116,
+              32,
+              102,
+              111,
+              114,
+              32,
+              121,
+              111,
+              117,
+              46,
+              34,
+              125,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 570,
+          "responseSize": 338
+        },
+        "id": "211f7f88-bb1d-4319-939f-cfdbe4b96d45",
+        "assertions": [
+          {
+            "assertion": "Name sesuai input",
+            "skipped": false
+          },
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "8873f794-27e7-429c-80a2-f087dce60f0d",
+          "length": 5,
+          "cycles": 2,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "70af17db-f27e-41aa-be7f-e7c05fbd3724"
+        },
+        "item": {
+          "id": "d76e14ff-14aa-43d8-8018-7aea15340483",
+          "name": "https://reqres.in/api/users",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "302f63b1-8aeb-44d7-b978-3e19f06cec45",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    name: { type: \"string\" },\r",
+                  "    job: { type: \"string\" },\r",
+                  "    id: { type: \"string\" },          // di ReqRes id = string\r",
+                  "    createdAt: { type: \"string\" }\r",
+                  "  },\r",
+                  "  required: [\"name\", \"job\", \"id\", \"createdAt\"]\r",
+                  "};\r",
+                  "\r",
+                  "const j = pm.response.json();\r",
+                  "// Di POST Create User (Tests)\r",
+                  "pm.collectionVariables.set(\"newUserId\", j.id);\r",
+                  "console.log(\"Set newUserId (collection):\", j.id);\r",
+                  "// pm.test(\"Name matches CSV\", () => pm.expect(j.name).to.eql(pm.iterationData.get(\"name\")));\r",
+                  "// pm.test(\"Job matches CSV\",  () => pm.expect(j.job).to.eql(pm.iterationData.get(\"job\")));\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains name and job\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "76dfd426-9623-4708-b403-6792d45c5eb4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "45b923d9-fe7f-4059-b09e-3451cd1e7bb1",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "44",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Sasa\", \"job\": \"QA Engineer\" }\r\n\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "56f18639-8e35-4294-b4ab-0e0486063101",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:11 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "85"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"55-bjyuXQQwE63d5WrheJxc+f10gfQ\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "96"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "60"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240211\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240211\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "ccb699ac-8a1c-0f38-8cbd-ba2d590d95c0"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "9874301aa8b85c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              83,
+              97,
+              115,
+              97,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              81,
+              65,
+              32,
+              69,
+              110,
+              103,
+              105,
+              110,
+              101,
+              101,
+              114,
+              34,
+              44,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              57,
+              52,
+              57,
+              34,
+              44,
+              34,
+              99,
+              114,
+              101,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              51,
+              48,
+              84,
+              49,
+              51,
+              58,
+              53,
+              48,
+              58,
+              49,
+              49,
+              46,
+              55,
+              50,
+              52,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 264,
+          "responseSize": 85
+        },
+        "id": "d76e14ff-14aa-43d8-8018-7aea15340483",
+        "assertions": [
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 201",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains name and job",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "6a6f7406-16b3-4faa-ba59-b4223516b45d",
+          "length": 5,
+          "cycles": 2,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "fa655c87-758c-4b91-9143-28bb29967edc"
+        },
+        "item": {
+          "id": "0e2cedb1-e80e-4d6c-aee0-9b3929baf804",
+          "name": "https://reqres.in/api/users/{{newUserId}}",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "{{newUserId}}"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "fec97cd1-8b58-42ec-8779-112788b1a481",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const jsonData = pm.response.json();\r",
+                  "// const schema = {\r",
+                  "//   type: \"object\",\r",
+                  "//   properties: {\r",
+                  "//     data: {\r",
+                  "//       type: \"object\",\r",
+                  "//       properties: {\r",
+                  "//         id: { type: \"number\" },\r",
+                  "//         email: { type: \"string\" },\r",
+                  "//         first_name: { type: \"string\" }\r",
+                  "//       },\r",
+                  "//       required: [\"id\",\"email\",\"first_name\"]\r",
+                  "//     }\r",
+                  "//   },\r",
+                  "//   required: [\"data\"]\r",
+                  "// };\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Name sesuai input\", () => {\r",
+                  "  const j = pm.response.json();\r",
+                  "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "// pm.test(\"Schema valid\", () => {\r",
+                  "//   pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"Response has email field\", function () {\r",
+                  "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"User ID is 2\", function () {\r",
+                  "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "// });\r",
+                  "\r",
+                  "pm.test(\"Created user is not persisted (404 expected)\", () => {\r",
+                  "  pm.response.to.have.status(404);\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "ca8b946a-1e19-4879-9ab9-bd1d9a829cbc"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "949"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "bf386407-bb01-43a2-a8c7-63b84180a325",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "raw",
+            "raw": "",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "9e7dc63c-88d4-443d-9a45-d823377ccf0b",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:12 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "94"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "60"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=CtR4xDA4n6%2B2zMld8y%2F70KQJsc%2FHVRWF1wqPjtlW%2BCY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240212\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=CtR4xDA4n6%2B2zMld8y%2F70KQJsc%2FHVRWF1wqPjtlW%2BCY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240212\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "53f50b02-c438-bd91-f0f7-f064015ed4a5"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "max-age=14400"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "MISS"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "9874301cdac35c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 460,
+          "responseSize": 2
+        },
+        "id": "0e2cedb1-e80e-4d6c-aee0-9b3929baf804",
+        "assertions": [
+          {
+            "assertion": "Name sesuai input",
+            "skipped": false
+          },
+          {
+            "assertion": "Created user is not persisted (404 expected)",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "e067b511-cd64-427b-b6d4-3c05a23c1d55",
+          "length": 5,
+          "cycles": 2,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "80d7453b-2577-4388-9c2a-910fb6221044"
+        },
+        "item": {
+          "id": "acf5fa68-f4eb-4abf-912d-1a7875da69fd",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                ""
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c7a2c219-1e5c-4085-90fa-ececc09ecc1d",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    name: { type: \"string\" },\r",
+                  "    job: { type: \"string\" },\r",
+                  "    updatedAt: { type: \"string\" }\r",
+                  "  },\r",
+                  "  required: [\"name\", \"job\", \"updatedAt\"]\r",
+                  "};\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains updatedAt\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                  "});\r",
+                  "\r",
+                  "// pm.test(\"Status 404 for user not found\", function () {\r",
+                  "//   pm.response.to.have.status(404);\r",
+                  "// });"
+                ],
+                "_lastExecutionId": "993032db-939f-42b7-b5e3-a4f409e37d84"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              ""
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "4185e302-4eff-4772-bc7e-d3fbd882f693",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "37",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "06d990aa-f821-4090-9451-4f4472a22d09",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:12 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"47-CLvzQmDKZPli+J8CcekOJOQ1m2Y\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "92"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "59"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=CtR4xDA4n6%2B2zMld8y%2F70KQJsc%2FHVRWF1wqPjtlW%2BCY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240212\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=CtR4xDA4n6%2B2zMld8y%2F70KQJsc%2FHVRWF1wqPjtlW%2BCY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240212\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "beb9546f-47c6-dd9e-2a2c-b92885ca150b"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "987430206e055c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              84,
+              105,
+              115,
+              97,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              84,
+              114,
+              97,
+              118,
+              101,
+              108,
+              101,
+              114,
+              34,
+              44,
+              34,
+              117,
+              112,
+              100,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              51,
+              48,
+              84,
+              49,
+              51,
+              58,
+              53,
+              48,
+              58,
+              49,
+              50,
+              46,
+              56,
+              50,
+              53,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 533,
+          "responseSize": 71
+        },
+        "id": "acf5fa68-f4eb-4abf-912d-1a7875da69fd",
+        "assertions": [
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains updatedAt",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "5628deb9-dc5d-4cc9-9d63-a5c40c6c980a",
+          "length": 5,
+          "cycles": 2,
+          "position": 4,
+          "iteration": 0,
+          "httpRequestId": "8a7348f9-c210-4f1b-9b8b-2988b2e34ab1"
+        },
+        "item": {
+          "id": "8e723ed3-4506-48f4-8ecf-080ead92ef4b",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "2"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }"
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c8713e7b-19ef-49c0-90d7-278ffa38f2e4",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "_lastExecutionId": "80bf39f1-ac0f-4b17-a472-3362961bf92b"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "bdb47938-bdcc-4c34-8351-4a7b63f1d43c",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "40",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Sasa\", \"job\": \"QA Engineer\" }"
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "a33b87b6-982d-46a8-a355-e9434389e0dc",
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:13 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "90"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "59"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=hLggtPK71sJ2%2BlfVsQMIYJlN%2FD82n6RDOj9haXbmCFY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240213\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=hLggtPK71sJ2%2BlfVsQMIYJlN%2FD82n6RDOj9haXbmCFY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240213\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "cdfb6042-004e-82c0-3ae8-178a03ffee9d"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "98743024298b5c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 263,
+          "responseSize": 0
+        },
+        "id": "8e723ed3-4506-48f4-8ecf-080ead92ef4b",
+        "assertions": [
+          {
+            "assertion": "Status code is 204",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "0ab0dd6b-8318-48d6-ad0c-b5988defed32",
+          "length": 5,
+          "cycles": 2,
+          "position": 0,
+          "iteration": 1,
+          "cr": true,
+          "httpRequestId": "494ad0a6-1089-46ab-9dd7-b5057bb31a78"
+        },
+        "item": {
+          "id": "211f7f88-bb1d-4319-939f-cfdbe4b96d45",
+          "name": "https://reqres.in/api/users/{{existingUserId}}",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "{{existingUserId}}"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "21acf12b-d40f-47d6-9b2d-fa935d866f1d",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const jsonData = pm.response.json();\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    data: {\r",
+                  "      type: \"object\",\r",
+                  "      properties: {\r",
+                  "        id: { type: \"number\" },\r",
+                  "        // email: { type: \"string\" },\r",
+                  "        first_name: { type: \"string\" }\r",
+                  "      },\r",
+                  "      required: [\"id\",\"first_name\"]\r",
+                  "    }\r",
+                  "  },\r",
+                  "  required: [\"data\"]\r",
+                  "};\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Name sesuai input\", () => {\r",
+                  "  const j = pm.response.json();\r",
+                  "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// pm.test(\"Response has email field\", function () {\r",
+                  "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"User ID is 2\", function () {\r",
+                  "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "// });"
+                ],
+                "_lastExecutionId": "b0797399-e9b2-458e-9e01-87eeea023d63"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "9b34e559-bf2e-491c-ac61-a7d7f49767ae",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.expect(pm.variables.get(\"existingUserId\"), \"existingUserId must be set\").to.be.ok;\r",
+                  "if (!pm.collectionVariables.get(\"existingUserId\")) {\r",
+                  "  pm.collectionVariables.set(\"existingUserId\", \"2\");\r",
+                  "}"
+                ],
+                "_lastExecutionId": "13d5e213-74a7-42bd-aba2-fac32e70e666"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "b3544a77-6bd0-4e3e-8845-07354f525f70",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "formdata",
+            "formdata": []
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "b0010abe-9164-45c5-8edd-4a85e2e8511d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:13 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"152-ApQgGHL6RKwaebFlrPCYPBO1xHg\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "98"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "60"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240211\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=PHe%2BF24XbeLoxDctrvOsPDOqeW03Tx2Iy5qYlgWXW5k%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240211\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "5a26cf50-c526-16fb-da95-6d573d98a978"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Age",
+              "value": "2"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "max-age=14400"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "HIT"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "987430265bb45c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              100,
+              97,
+              116,
+              97,
+              34,
+              58,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              101,
+              109,
+              97,
+              105,
+              108,
+              34,
+              58,
+              34,
+              106,
+              97,
+              110,
+              101,
+              116,
+              46,
+              119,
+              101,
+              97,
+              118,
+              101,
+              114,
+              64,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              34,
+              44,
+              34,
+              102,
+              105,
+              114,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              74,
+              97,
+              110,
+              101,
+              116,
+              34,
+              44,
+              34,
+              108,
+              97,
+              115,
+              116,
+              95,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              87,
+              101,
+              97,
+              118,
+              101,
+              114,
+              34,
+              44,
+              34,
+              97,
+              118,
+              97,
+              116,
+              97,
+              114,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              46,
+              105,
+              110,
+              47,
+              105,
+              109,
+              103,
+              47,
+              102,
+              97,
+              99,
+              101,
+              115,
+              47,
+              50,
+              45,
+              105,
+              109,
+              97,
+              103,
+              101,
+              46,
+              106,
+              112,
+              103,
+              34,
+              125,
+              44,
+              34,
+              115,
+              117,
+              112,
+              112,
+              111,
+              114,
+              116,
+              34,
+              58,
+              123,
+              34,
+              117,
+              114,
+              108,
+              34,
+              58,
+              34,
+              104,
+              116,
+              116,
+              112,
+              115,
+              58,
+              47,
+              47,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              99,
+              97,
+              100,
+              100,
+              121,
+              46,
+              105,
+              111,
+              63,
+              117,
+              116,
+              109,
+              95,
+              115,
+              111,
+              117,
+              114,
+              99,
+              101,
+              61,
+              114,
+              101,
+              113,
+              114,
+              101,
+              115,
+              38,
+              117,
+              116,
+              109,
+              95,
+              109,
+              101,
+              100,
+              105,
+              117,
+              109,
+              61,
+              106,
+              115,
+              111,
+              110,
+              38,
+              117,
+              116,
+              109,
+              95,
+              99,
+              97,
+              109,
+              112,
+              97,
+              105,
+              103,
+              110,
+              61,
+              114,
+              101,
+              102,
+              101,
+              114,
+              114,
+              97,
+              108,
+              34,
+              44,
+              34,
+              116,
+              101,
+              120,
+              116,
+              34,
+              58,
+              34,
+              84,
+              105,
+              114,
+              101,
+              100,
+              32,
+              111,
+              102,
+              32,
+              119,
+              114,
+              105,
+              116,
+              105,
+              110,
+              103,
+              32,
+              101,
+              110,
+              100,
+              108,
+              101,
+              115,
+              115,
+              32,
+              115,
+              111,
+              99,
+              105,
+              97,
+              108,
+              32,
+              109,
+              101,
+              100,
+              105,
+              97,
+              32,
+              99,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              63,
+              32,
+              76,
+              101,
+              116,
+              32,
+              67,
+              111,
+              110,
+              116,
+              101,
+              110,
+              116,
+              32,
+              67,
+              97,
+              100,
+              100,
+              121,
+              32,
+              103,
+              101,
+              110,
+              101,
+              114,
+              97,
+              116,
+              101,
+              32,
+              105,
+              116,
+              32,
+              102,
+              111,
+              114,
+              32,
+              121,
+              111,
+              117,
+              46,
+              34,
+              125,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 87,
+          "responseSize": 338
+        },
+        "id": "211f7f88-bb1d-4319-939f-cfdbe4b96d45",
+        "assertions": [
+          {
+            "assertion": "Name sesuai input",
+            "skipped": false
+          },
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "608f7fe6-9563-4199-9b9b-eb269fe13b28",
+          "length": 5,
+          "cycles": 2,
+          "position": 1,
+          "iteration": 1,
+          "httpRequestId": "23553768-c05a-49bb-adbd-f6a2f1f4f0f5"
+        },
+        "item": {
+          "id": "d76e14ff-14aa-43d8-8018-7aea15340483",
+          "name": "https://reqres.in/api/users",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "302f63b1-8aeb-44d7-b978-3e19f06cec45",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    name: { type: \"string\" },\r",
+                  "    job: { type: \"string\" },\r",
+                  "    id: { type: \"string\" },          // di ReqRes id = string\r",
+                  "    createdAt: { type: \"string\" }\r",
+                  "  },\r",
+                  "  required: [\"name\", \"job\", \"id\", \"createdAt\"]\r",
+                  "};\r",
+                  "\r",
+                  "const j = pm.response.json();\r",
+                  "// Di POST Create User (Tests)\r",
+                  "pm.collectionVariables.set(\"newUserId\", j.id);\r",
+                  "console.log(\"Set newUserId (collection):\", j.id);\r",
+                  "// pm.test(\"Name matches CSV\", () => pm.expect(j.name).to.eql(pm.iterationData.get(\"name\")));\r",
+                  "// pm.test(\"Job matches CSV\",  () => pm.expect(j.job).to.eql(pm.iterationData.get(\"job\")));\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains name and job\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "76dfd426-9623-4708-b403-6792d45c5eb4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "f471144a-71d4-46c1-ac68-581f22a328cf",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "51",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Michi\", \"job\": \"Automation Tester\" }\r\n\r\n",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "45864bae-754d-4226-9a3d-0a97852d463d",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:13 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "92"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"5c-rbsK/pc+nhJLaLa5/xsfQybojL8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "88"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "58"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=hLggtPK71sJ2%2BlfVsQMIYJlN%2FD82n6RDOj9haXbmCFY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240213\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=hLggtPK71sJ2%2BlfVsQMIYJlN%2FD82n6RDOj9haXbmCFY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240213\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "51e7b97e-cfa9-5d27-22b8-338b725ce27d"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "987430277d215c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              77,
+              105,
+              99,
+              104,
+              105,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              65,
+              117,
+              116,
+              111,
+              109,
+              97,
+              116,
+              105,
+              111,
+              110,
+              32,
+              84,
+              101,
+              115,
+              116,
+              101,
+              114,
+              34,
+              44,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              52,
+              50,
+              53,
+              34,
+              44,
+              34,
+              99,
+              114,
+              101,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              51,
+              48,
+              84,
+              49,
+              51,
+              58,
+              53,
+              48,
+              58,
+              49,
+              51,
+              46,
+              55,
+              55,
+              57,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 270,
+          "responseSize": 92
+        },
+        "id": "d76e14ff-14aa-43d8-8018-7aea15340483",
+        "assertions": [
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 201",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains name and job",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "0043d39b-8384-4abb-a972-3f7bcde7ca85",
+          "length": 5,
+          "cycles": 2,
+          "position": 2,
+          "iteration": 1,
+          "httpRequestId": "6f61f988-b883-4a22-9eca-409ea43ac6d7"
+        },
+        "item": {
+          "id": "0e2cedb1-e80e-4d6c-aee0-9b3929baf804",
+          "name": "https://reqres.in/api/users/{{newUserId}}",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "{{newUserId}}"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "fec97cd1-8b58-42ec-8779-112788b1a481",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const jsonData = pm.response.json();\r",
+                  "// const schema = {\r",
+                  "//   type: \"object\",\r",
+                  "//   properties: {\r",
+                  "//     data: {\r",
+                  "//       type: \"object\",\r",
+                  "//       properties: {\r",
+                  "//         id: { type: \"number\" },\r",
+                  "//         email: { type: \"string\" },\r",
+                  "//         first_name: { type: \"string\" }\r",
+                  "//       },\r",
+                  "//       required: [\"id\",\"email\",\"first_name\"]\r",
+                  "//     }\r",
+                  "//   },\r",
+                  "//   required: [\"data\"]\r",
+                  "// };\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Name sesuai input\", () => {\r",
+                  "  const j = pm.response.json();\r",
+                  "  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "// pm.test(\"Schema valid\", () => {\r",
+                  "//   pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"Response has email field\", function () {\r",
+                  "//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+                  "// });\r",
+                  "\r",
+                  "// pm.test(\"User ID is 2\", function () {\r",
+                  "//     pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "// });\r",
+                  "\r",
+                  "pm.test(\"Created user is not persisted (404 expected)\", () => {\r",
+                  "  pm.response.to.have.status(404);\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "ca8b946a-1e19-4879-9ab9-bd1d9a829cbc"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "425"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "d294f6b9-3bff-4600-b949-1d2d5cc11a68",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "body": {
+            "mode": "raw",
+            "raw": "",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "89b3513e-5a67-48c6-8cd1-027ac97eb41c",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:14 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "86"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "58"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240214\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240214\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "3efbf723-4b5a-1491-241b-ff58055ccee0"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "max-age=14400"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "MISS"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "98743029af375c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 288,
+          "responseSize": 2
+        },
+        "id": "0e2cedb1-e80e-4d6c-aee0-9b3929baf804",
+        "assertions": [
+          {
+            "assertion": "Name sesuai input",
+            "skipped": false
+          },
+          {
+            "assertion": "Created user is not persisted (404 expected)",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "a726719e-243d-4794-b7d0-6d9764021ee7",
+          "length": 5,
+          "cycles": 2,
+          "position": 3,
+          "iteration": 1,
+          "httpRequestId": "5b269007-c7a4-4e15-bdb5-c356f1211d90"
+        },
+        "item": {
+          "id": "acf5fa68-f4eb-4abf-912d-1a7875da69fd",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                ""
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c7a2c219-1e5c-4085-90fa-ececc09ecc1d",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    name: { type: \"string\" },\r",
+                  "    job: { type: \"string\" },\r",
+                  "    updatedAt: { type: \"string\" }\r",
+                  "  },\r",
+                  "  required: [\"name\", \"job\", \"updatedAt\"]\r",
+                  "};\r",
+                  "\r",
+                  "const body = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Schema valid\", () => {\r",
+                  "  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains updatedAt\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                  "});\r",
+                  "\r",
+                  "// pm.test(\"Status 404 for user not found\", function () {\r",
+                  "//   pm.response.to.have.status(404);\r",
+                  "// });"
+                ],
+                "_lastExecutionId": "993032db-939f-42b7-b5e3-a4f409e37d84"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              ""
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "7e1d2263-8fce-464b-8645-1b9e1c861f05",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "37",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "ad63a3c6-1905-4b99-973a-d0138ed6a3a4",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:14 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"47-Ra/StO1eDCfPDIHu9Q3P6Cu7RhI\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "84"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "57"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240214\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240214\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin, accept-encoding"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "612bd6fb-e91a-b076-7233-52c728d19b66"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "9874302bf99d5c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              84,
+              105,
+              115,
+              97,
+              34,
+              44,
+              34,
+              106,
+              111,
+              98,
+              34,
+              58,
+              34,
+              84,
+              114,
+              97,
+              118,
+              101,
+              108,
+              101,
+              114,
+              34,
+              44,
+              34,
+              117,
+              112,
+              100,
+              97,
+              116,
+              101,
+              100,
+              65,
+              116,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              53,
+              45,
+              48,
+              57,
+              45,
+              51,
+              48,
+              84,
+              49,
+              51,
+              58,
+              53,
+              48,
+              58,
+              49,
+              52,
+              46,
+              52,
+              57,
+              54,
+              90,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 262,
+          "responseSize": 71
+        },
+        "id": "acf5fa68-f4eb-4abf-912d-1a7875da69fd",
+        "assertions": [
+          {
+            "assertion": "Schema valid",
+            "skipped": false
+          },
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains updatedAt",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "15c24b8d-01d0-4c7e-8369-62750336ed9c",
+          "length": 5,
+          "cycles": 2,
+          "position": 4,
+          "iteration": 1,
+          "httpRequestId": "416b766c-cffb-4a2d-8ed3-3f9283105990"
+        },
+        "item": {
+          "id": "8e723ed3-4506-48f4-8ecf-080ead92ef4b",
+          "name": "https://reqres.in/api/users/2",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "path": [
+                "api",
+                "users",
+                "2"
+              ],
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres-free-v1"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }"
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c8713e7b-19ef-49c0-90d7-278ffa38f2e4",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "_lastExecutionId": "80bf39f1-ac0f-4b17-a472-3362961bf92b"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "users",
+              "2"
+            ],
+            "host": [
+              "reqres",
+              "in"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "x-api-key",
+              "value": "reqres-free-v1"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "fb2f33ce-1130-477e-8b1a-7a42ebb3494b",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "reqres.in",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "47",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "{ \"name\": \"Michi\", \"job\": \"Automation Tester\" }"
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "53632c2d-bbaf-4755-b2d5-ce51fbc6b08f",
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 30 Sep 2025 13:50:14 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:5173"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+            },
+            {
+              "key": "Nel",
+              "value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+            },
+            {
+              "key": "Ratelimit-Limit",
+              "value": "100"
+            },
+            {
+              "key": "Ratelimit-Policy",
+              "value": "100;w=60"
+            },
+            {
+              "key": "Ratelimit-Remaining",
+              "value": "82"
+            },
+            {
+              "key": "Ratelimit-Reset",
+              "value": "57"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Report-To",
+              "value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D\\u0026sid=c4c9725f-1ab0-44d8-820f-430df2718e11\\u0026ts=1759240214\"}],\"max_age\":3600}"
+            },
+            {
+              "key": "Reporting-Endpoints",
+              "value": "heroku-nel=\"https://nel.heroku.com/reports?s=JQ7ngzAgaiFsbXJX37UYvIvRqx6t2YiqPrOKqbT9BcY%3D&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&ts=1759240214\""
+            },
+            {
+              "key": "Server",
+              "value": "cloudflare"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Via",
+              "value": "1.1 heroku-router"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Request-Id",
+              "value": "d732d94c-b7b4-b337-cb14-a43c95441d7c"
+            },
+            {
+              "key": "X-Xss-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "cf-cache-status",
+              "value": "DYNAMIC"
+            },
+            {
+              "key": "CF-RAY",
+              "value": "9874302e2bc25c2d-SIN"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 269,
+          "responseSize": 0
+        },
+        "id": "8e723ed3-4506-48f4-8ecf-080ead92ef4b",
+        "assertions": [
+          {
+            "assertion": "Status code is 204",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 999
+    },
+    "failures": [],
+    "error": null
+  }
+}

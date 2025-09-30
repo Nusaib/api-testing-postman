@@ -8,26 +8,66 @@
 	},
 	"item": [
 		{
-			"name": "https://reqres.in/api/users/2",
+			"name": "https://reqres.in/api/users/{{existingUserId}}",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"const schema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    data: {\r",
+							"      type: \"object\",\r",
+							"      properties: {\r",
+							"        id: { type: \"number\" },\r",
+							"        // email: { type: \"string\" },\r",
+							"        first_name: { type: \"string\" }\r",
+							"      },\r",
+							"      required: [\"id\",\"first_name\"]\r",
+							"    }\r",
+							"  },\r",
+							"  required: [\"data\"]\r",
+							"};\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Name sesuai input\", () => {\r",
+							"  const j = pm.response.json();\r",
+							"  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Schema valid\", () => {\r",
+							"  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response has email field\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data).to.have.property(\"email\");\r",
-							"});\r",
+							"// pm.test(\"Response has email field\", function () {\r",
+							"//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+							"// });\r",
 							"\r",
-							"pm.test(\"User ID is 2\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data.id).to.eql(2);\r",
-							"});\r",
-							""
+							"// pm.test(\"User ID is 2\", function () {\r",
+							"//     pm.expect(jsonData.data.id).to.eql(2);\r",
+							"// });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.expect(pm.variables.get(\"existingUserId\"), \"existingUserId must be set\").to.be.ok;\r",
+							"if (!pm.collectionVariables.get(\"existingUserId\")) {\r",
+							"  pm.collectionVariables.set(\"existingUserId\", \"2\");\r",
+							"}"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -35,6 +75,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -47,8 +90,12 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
 				"url": {
-					"raw": "https://reqres.in/api/users/2",
+					"raw": "https://reqres.in/api/users/{{existingUserId}}",
 					"protocol": "https",
 					"host": [
 						"reqres",
@@ -57,7 +104,7 @@
 					"path": [
 						"api",
 						"users",
-						"2"
+						"{{existingUserId}}"
 					]
 				}
 			},
@@ -70,6 +117,30 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"const schema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    name: { type: \"string\" },\r",
+							"    job: { type: \"string\" },\r",
+							"    id: { type: \"string\" },          // di ReqRes id = string\r",
+							"    createdAt: { type: \"string\" }\r",
+							"  },\r",
+							"  required: [\"name\", \"job\", \"id\", \"createdAt\"]\r",
+							"};\r",
+							"\r",
+							"const j = pm.response.json();\r",
+							"// Di POST Create User (Tests)\r",
+							"pm.collectionVariables.set(\"newUserId\", j.id);\r",
+							"console.log(\"Set newUserId (collection):\", j.id);\r",
+							"// pm.test(\"Name matches CSV\", () => pm.expect(j.name).to.eql(pm.iterationData.get(\"name\")));\r",
+							"// pm.test(\"Job matches CSV\",  () => pm.expect(j.job).to.eql(pm.iterationData.get(\"job\")));\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Schema valid\", () => {\r",
+							"  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
@@ -78,8 +149,7 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property(\"name\");\r",
 							"    pm.expect(jsonData).to.have.property(\"job\");\r",
-							"});\r",
-							""
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -101,7 +171,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"QA Engineer\"\r\n}\r\n",
+					"raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,12 +194,123 @@
 			"response": []
 		},
 		{
+			"name": "https://reqres.in/api/users/{{newUserId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"// const schema = {\r",
+							"//   type: \"object\",\r",
+							"//   properties: {\r",
+							"//     data: {\r",
+							"//       type: \"object\",\r",
+							"//       properties: {\r",
+							"//         id: { type: \"number\" },\r",
+							"//         email: { type: \"string\" },\r",
+							"//         first_name: { type: \"string\" }\r",
+							"//       },\r",
+							"//       required: [\"id\",\"email\",\"first_name\"]\r",
+							"//     }\r",
+							"//   },\r",
+							"//   required: [\"data\"]\r",
+							"// };\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Name sesuai input\", () => {\r",
+							"  const j = pm.response.json();\r",
+							"  pm.expect(j.name).to.eql(pm.variables.get(\"inputName\"));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// pm.test(\"Schema valid\", () => {\r",
+							"//   pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Response has email field\", function () {\r",
+							"//     pm.expect(jsonData.data).to.have.property(\"email\");\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"User ID is 2\", function () {\r",
+							"//     pm.expect(jsonData.data.id).to.eql(2);\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Created user is not persisted (404 expected)\", () => {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/{{newUserId}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{newUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "https://reqres.in/api/users/2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"const schema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    name: { type: \"string\" },\r",
+							"    job: { type: \"string\" },\r",
+							"    updatedAt: { type: \"string\" }\r",
+							"  },\r",
+							"  required: [\"name\", \"job\", \"updatedAt\"]\r",
+							"};\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Schema valid\", () => {\r",
+							"  pm.expect(tv4.validate(body, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
@@ -138,7 +319,10 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
 							"});\r",
-							""
+							"\r",
+							"// pm.test(\"Status 404 for user not found\", function () {\r",
+							"//   pm.response.to.have.status(404);\r",
+							"// });"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -160,7 +344,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n",
+					"raw": "{ \"name\": \"Tisa\", \"job\": \"Traveler\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,7 +352,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://reqres.in/api/users/2",
+					"raw": "https://reqres.in/api/users/",
 					"protocol": "https",
 					"host": [
 						"reqres",
@@ -177,7 +361,7 @@
 					"path": [
 						"api",
 						"users",
-						"2"
+						""
 					]
 				}
 			},
@@ -214,7 +398,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Sasa\",\r\n  \"job\": \"Automation Tester\"\r\n}\r\n"
+					"raw": "{ \"name\": \"{{name}}\", \"job\": \"{{job}}\" }"
 				},
 				"url": {
 					"raw": "https://reqres.in/api/users/2",
@@ -231,6 +415,40 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "existingUserId",
+			"value": ""
+		},
+		{
+			"key": "newUserId",
+			"value": ""
 		}
 	]
 }
