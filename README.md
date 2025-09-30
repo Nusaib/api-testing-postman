@@ -1,3 +1,6 @@
+![QA](https://img.shields.io/badge/QA-Automation-blue)
+![Postman](https://img.shields.io/badge/Postman-Collection-orange)
+
 # API Testing with Postman – Dummy API (ReqRes)
 
 ## 📌 Overview
