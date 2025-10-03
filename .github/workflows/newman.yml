@@ -2,8 +2,8 @@ name: Newman CI (all week)
 on:
   push:
     paths:
-      - 'week1_reqres/' # jalan kalau ada perubahan di folder weekX
-      - 'week2_jsonplaceholder/'
+      - 'week1_reqres/**'
+      - 'week2_jsonplaceholder/**'
       - '.github/workflows/newman.yml'
   pull_request:
 jobs:
