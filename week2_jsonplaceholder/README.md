@@ -22,16 +22,22 @@ Tujuan project ini:
 1. **GET** `/posts/1` → Ambil data post dengan ID 1.  
 2. **POST** `/post` → Tambah post baru dengan body JSON.  
 3. **PUT** `/posts/1` → Update data post dengan ID 1.  
-4. **DELETE** `/posts/1` → Hapus post dengan ID 1.  
+4. **DELETE** `/posts/1` → Hapus post dengan ID 1.
+5. **GET** `/comments?postId=1` → Ambil data comment dari post dengan ID 1. 
+6. **POST** `/post` → Tambah comment baru dengan body JSON.  
+7. **GET** `/todos/1` → Ambil data to do dengan ID 1. 
 
 ---
 
 ## 📂 Test Collection
-Collection berisi 4 request utama:
+Collection berisi 7 request utama:
 - `GET Post`  
 - `POST Create Post`  
 - `PUT Update Post`  
 - `DELETE Post`  
+- `GET Comment`  
+- `POST Create Comment` 
+- `GET To do`
 
 ---
 
@@ -44,6 +50,15 @@ Collection berisi 4 request utama:
 
 ### 3. DELETE Post
 ![DELETE Post Screenshot](screenshots/delete-post.png)
+
+### 4. GET Comment
+![GET Comment Screenshot](screenshots/get-comment.png)
+
+### 5. POST Comment
+![POST Comment Screenshot](screenshots/post-comment.png)
+
+### 6. GET Todos
+![GET Todos Screenshot](screenshots/get-todo.png)
 
 ---
 
