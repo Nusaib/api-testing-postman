@@ -1,86 +1,56 @@
+![GitHub last commit](https://img.shields.io/github/last-commit/Nusaib/api-testing-postman)
+![Repo size](https://img.shields.io/github/repo-size/Nusaib/api-testing-postman)
 ![QA](https://img.shields.io/badge/QA-Automation-blue)
 ![Postman](https://img.shields.io/badge/Postman-Collection-orange)
 
-# API Testing with Postman – Dummy API (ReqRes)
+# 💻 QA Automation & API Testing
 
 ## 📌 Overview
-Project ini adalah latihan dasar API Testing menggunakan **Postman** dengan dummy API dari [ReqRes](https://reqres.in).  
+Project ini mendokumentasikan perjalanan belajar **QA Automation & API Testing**.  
 Tujuan project ini:
-- Memahami dasar **HTTP Methods** (GET, POST, PUT, DELETE).  
-- Mengenal format request & response **JSON**.  
-- Membuat collection Postman sebagai portofolio QA Automation.  
+Membangun portofolio pembelajaran QA Automation & API Testing dari dasar **API**, **Automation tools**, **Integrasi CI/CD** hingga **end-to-end testing**.
 
 ---
 
-## 🛠️ Tools
-- Postman v11.64.0
-- Dummy API: https://reqres.in  
+## 📅 Progress Mingguan
+- [Week 1 – Dasar API (HTTP, JSON, Postman)](./week1_reqres) ✅ → Dasar API (HTTP, JSON, Postman) 
+- [Week 2 – Dasar API + latihan dummy API](./week2_jsonplaceholder/) ✅ → Dasar API + latihan dummy API 
+- Week 3 – Automation tools (Selenium/RestAssured) (akan datang)  
+- Week 4 – Mini project: API test suite (akan datang)  
+- Week 5 – Framework testing sederhana (akan datang)  
 
 ---
 
-## 🚀 Test Cases
-1. **GET** `/api/users/2` → Ambil data user dengan ID 2.  
-2. **POST** `/api/users` → Tambah user baru dengan body JSON.  
-3. **PUT** `/api/users/2` → Update data user dengan ID 2.  
-4. **DELETE** `/api/users/2` → Hapus user dengan ID 2.  
+## 🎯 Target Belajar
+- Memahami dasar HTTP (method, status code) & JSON.
+- Menggunakan Postman untuk membuat collection & assertion.
+- Melakukan data-driven testing (CSV/JSON).
+- Validasi schema respons API.
+- Menjalankan test secara otomatis dengan Newman (CLI).
+- Membuat report JSON/HTML hasil test.
+- Integrasi dengan GitHub Actions (CI/CD).
+- Chaining request (POST → GET → PUT → DELETE).
+- Menguji API dengan autentikasi (Basic Auth, Bearer Token).
+- Menangani negative test & error handling.  
 
 ---
 
-## 📂 Test Collection
-Collection berisi 4 request utama:
-- `GET User`  
-- `POST Create User`  
-- `PUT Update User`  
-- `DELETE User`  
+## 📸 Report Preview
+![Report Week 1](./week1_reqres/screenshots/newman-result-day2-html.png)
+![Report Week 2](./week2_jsonplaceholder/screenshots/newman-report.png)
 
 ---
 
-## 📸 Screenshots
-### 1. GET User
-![GET User Screenshot](screenshots/get-user.png)
-
-### 2. POST Create User
-![POST User Screenshot](screenshots/post-user.png)
-
-### 3. PUT Update User
-![PUT User Screenshot](screenshots/put-user.png)
-
-### 4. DELETE User
-![DELETE User Screenshot](screenshots/delete-user.png)
+## ⚠️ Known Issues / Limitations
+- ReqRes API kadang mengembalikan 429 Too Many Requests jika dipanggil dari GitHub Actions runner (karena public IP rate-limited).
 
 ---
 
-## ✅ Result
-- Semua request berhasil dengan status code **200/201/204** sesuai ekspektasi.  
-- Response body JSON sesuai dokumentasi ReqRes.  
+## 📌 Tools
+- **Postman** (API Platform)  
+- **Excel** (Dataset)  
+- **GitHub** (Version Control & Portfolio Hosting)  
 
 ---
 
-## 🧪 Postman Tests (Assertions)
-Sebagai tambahan dari mengirim request, collection ini juga mencakup **automated tests** menggunakan script Postman.
-
-Contoh (GET User):
-```javascript
-pm.test("Status code is 200", function () {
-    pm.response.to.have.status(200);
-});
-
-pm.test("Response contains email field", function () {
-    var jsonData = pm.response.json();
-    pm.expect(jsonData.data).to.have.property("email");
-});
-```
-
----
-
-## ▶️ Run with Newman
-```bash
-newman run API_Learning_01.postman_collection.json -r json --reporter-json-export responses/newman-results.json
-```
-
----
-
-## 🔮 Next Step
-- Integrasi test case ke dalam **automation framework** (RestAssured/Playwright).  
-- Generate report hasil testing.  
-- Publish project ke GitHub sebagai portofolio QA Automation.  
+✨ Stay tuned untuk update tiap minggu!  
