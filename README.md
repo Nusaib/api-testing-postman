@@ -8,7 +8,7 @@
 ## 📌 Overview
 This project documented my **QA Automation & API Testing** learning journey.  
 Project goal:
-Creating QA Automation & API Testing learning portfolio from basic **API**, **Automation tools**, **Integrasi CI/CD** hingga **end-to-end testing**.
+Creating QA Automation & API Testing learning portfolio from basic **API**, **Automation tools**, **CI/CD Integration** and **end-to-end testing**.
 
 ---
 
@@ -53,4 +53,4 @@ Creating QA Automation & API Testing learning portfolio from basic **API**, **Au
 
 ---
 
-✨ Stay tuned for every week's update!  
+✨ Stay tuned for weekly update!  
