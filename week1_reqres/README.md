@@ -4,11 +4,11 @@
 # API Testing with Postman – Dummy API (ReqRes)
 
 ## 📌 Overview
-Project ini adalah latihan dasar API Testing menggunakan **Postman** dengan dummy API dari [ReqRes](https://reqres.in).  
+This project is a basic exercise of API Testing using **Postman** with dummy API from [ReqRes](https://reqres.in).  
 Tujuan project ini:
-- Memahami dasar **HTTP Methods** (GET, POST, PUT, DELETE).  
-- Mengenal format request & response **JSON**.  
-- Membuat collection Postman sebagai portofolio QA Automation.  
+- Understand the basics of **HTTP Methods** (GET, POST, PUT, DELETE).  
+- Learn about **JSON** request and response formats.  
+- Create a Postman collection as part of a **QA Automation portfolio**.  
 
 ---
 
@@ -19,15 +19,15 @@ Tujuan project ini:
 ---
 
 ## 🚀 Test Cases
-1. **GET** `/api/users/2` → Ambil data user dengan ID 2.  
-2. **POST** `/api/users` → Tambah user baru dengan body JSON.  
-3. **PUT** `/api/users/2` → Update data user dengan ID 2.  
-4. **DELETE** `/api/users/2` → Hapus user dengan ID 2.  
+1. **GET** `/api/users/2` → Get user data with ID 2.  
+2. **POST** `/api/users` → Add new user with JSON body.  
+3. **PUT** `/api/users/2` → Update user data with ID 2.  
+4. **DELETE** `/api/users/2` → Delete user with ID 2.  
 
 ---
 
 ## 📂 Test Collection
-Collection berisi 4 request utama:
+Collection contains 4 main requests:
 - `GET User`  
 - `POST Create User`  
 - `PUT Update User`  
@@ -51,15 +51,15 @@ Collection berisi 4 request utama:
 ---
 
 ## ✅ Result
-- Semua request berhasil dengan status code **200/201/204** sesuai ekspektasi.  
-- Response body JSON sesuai dokumentasi ReqRes.  
+- All requests returned **200/201/204** status codes as expected.  
+- The JSON response body matched the API documentation. 
 
 ---
 
 ## 🧪 Postman Tests (Assertions)
-Sebagai tambahan dari mengirim request, collection ini juga mencakup **automated tests** menggunakan script Postman.
+In addition to sending requests, this collection also includes **automated tests** using Postman scripts.
 
-Contoh (GET User):
+Example (GET User):
 ```javascript
 pm.test("Status code is 200", function () {
     pm.response.to.have.status(200);
@@ -81,6 +81,6 @@ newman run API_Learning_01.postman_collection.json -r json --reporter-json-expor
 ---
 
 ## 🔮 Next Step
-- Integrasi test case ke dalam **automation framework** (RestAssured/Playwright).  
-- Generate report hasil testing.  
-- Publish project ke GitHub sebagai portofolio QA Automation.  
+- Integrate the test cases into an **automation framework** (RestAssured/Playwright).  
+- Generate detailed test result reports.  
+- Publish the project on GitHub as part of the **QA Automation portfolio**.  

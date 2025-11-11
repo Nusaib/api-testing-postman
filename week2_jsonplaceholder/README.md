@@ -4,11 +4,11 @@
 # API Testing with Postman – Dummy API (JSONPlaceholder)
 
 ## 📌 Overview
-Project ini adalah latihan dasar API Testing menggunakan **Postman** dengan dummy API dari [JSONPlaceholder](https://jsonplaceholder.typicode.com).  
-Tujuan project ini:
-- Memahami dasar **HTTP Methods** (GET, POST, PUT, DELETE).  
-- Mengenal format request & response **JSON**.  
-- Membuat collection Postman sebagai portofolio QA Automation.  
+This project is a basic exercise of API Testing using **Postman** with dummy API from [JSONPlaceholder](https://jsonplaceholder.typicode.com).  
+Project goals:
+- Understand the basics of **HTTP Methods** (GET, POST, PUT, DELETE).  
+- Learn about **JSON** request and response formats.  
+- Create a Postman collection as part of a **QA Automation portfolio**.  
 
 ---
 
@@ -19,18 +19,18 @@ Tujuan project ini:
 ---
 
 ## 🚀 Test Cases
-1. **GET** `/posts/1` → Ambil data post dengan ID 1.  
-2. **POST** `/post` → Tambah post baru dengan body JSON.  
-3. **PUT** `/posts/1` → Update data post dengan ID 1.  
-4. **DELETE** `/posts/1` → Hapus post dengan ID 1.
-5. **GET** `/comments?postId=1` → Ambil data comment dari post dengan ID 1. 
-6. **POST** `/post` → Tambah comment baru dengan body JSON.  
-7. **GET** `/todos/1` → Ambil data to do dengan ID 1. 
+1. **GET** `/posts/1` → Get post data with ID 1.  
+2. **POST** `/post` → Add new post with JSON body.  
+3. **PUT** `/posts/1` → Update post data with ID 1.  
+4. **DELETE** `/posts/1` → Delete post with ID 1.
+5. **GET** `/comments?postId=1` → Get comment data form post with ID 1. 
+6. **POST** `/post` → Add new comment with JSON body.  
+7. **GET** `/todos/1` → Get to do data with ID 1. 
 
 ---
 
 ## 📂 Test Collection
-Collection berisi 7 request utama:
+Collection contains 7 main requests:
 - `GET Post`  
 - `POST Create Post`  
 - `PUT Update Post`  
@@ -66,15 +66,15 @@ Collection berisi 7 request utama:
 ![Newman Result Screenshot](screenshots/newman-result.png)
 ![Newman Report Screenshot](screenshots/newman-report.png)
 
-- Semua request berhasil dengan status code **200/201/204** sesuai ekspektasi.  
-- Response body JSON sesuai dokumentasi.  
+- All requests returned **200/201/204** status codes as expected.  
+- The JSON response body matched the API documentation. 
 
 ---
 
 ## 🧪 Postman Tests (Assertions)
-Sebagai tambahan dari mengirim request, collection ini juga mencakup **automated tests** menggunakan script Postman.
+In addition to sending requests, this collection also includes **automated tests** using Postman scripts.
 
-Contoh (GET Post):
+Example (GET Post):
 ```javascript
 pm.test("Status 200", ()=> pm.response.to.have.status(200));
 pm.test("JSON response", ()=> pm.response.to.be.json);
@@ -94,6 +94,6 @@ newman run API_Learning_02_JSONPlaceholder.postman_collection.json --iteration-d
 ---
 
 ## 🔮 Next Step
-- Integrasi test case ke dalam **automation framework** (RestAssured/Playwright).  
-- Generate report hasil testing.  
-- Publish project ke GitHub sebagai portofolio QA Automation.  
+- Integrate the test cases into an **automation framework** (RestAssured/Playwright).  
+- Generate detailed test result reports.  
+- Publish the project on GitHub as part of the **QA Automation portfolio**. 
