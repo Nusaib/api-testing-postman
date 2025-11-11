@@ -6,32 +6,32 @@
 # 💻 QA Automation & API Testing
 
 ## 📌 Overview
-Project ini mendokumentasikan perjalanan belajar **QA Automation & API Testing**.  
-Tujuan project ini:
-Membangun portofolio pembelajaran QA Automation & API Testing dari dasar **API**, **Automation tools**, **Integrasi CI/CD** hingga **end-to-end testing**.
+This project documented my **QA Automation & API Testing** learning journey.  
+Project goal:
+Creating QA Automation & API Testing learning portfolio from basic **API**, **Automation tools**, **Integrasi CI/CD** hingga **end-to-end testing**.
 
 ---
 
-## 📅 Progress Mingguan
-- [Week 1 – Dasar API (HTTP, JSON, Postman)](./week1_reqres) ✅ → Dasar API (HTTP, JSON, Postman) 
-- [Week 2 – Dasar API + latihan dummy API](./week2_jsonplaceholder/) ✅ → Dasar API + latihan dummy API 
-- Week 3 – Automation tools (Selenium/RestAssured) (akan datang)  
-- Week 4 – Mini project: API test suite (akan datang)  
-- Week 5 – Framework testing sederhana (akan datang)  
+## 📅 Weekly Progress
+- [Week 1 – Basic API (HTTP, JSON, Postman)](./week1_reqres) ✅ → Basic API (HTTP, JSON, Postman) 
+- [Week 2 – Basic API + dummy API practice](./week2_jsonplaceholder/) ✅ → Basic API + dummy API practice
+- Week 3 – Automation tools (Selenium/RestAssured) (coming soon)  
+- Week 4 – Mini project: API test suite (coming soon)  
+- Week 5 – Simple testing framework (coming soon)  
 
 ---
 
-## 🎯 Target Belajar
-- Memahami dasar HTTP (method, status code) & JSON.
-- Menggunakan Postman untuk membuat collection & assertion.
-- Melakukan data-driven testing (CSV/JSON).
-- Validasi schema respons API.
-- Menjalankan test secara otomatis dengan Newman (CLI).
-- Membuat report JSON/HTML hasil test.
-- Integrasi dengan GitHub Actions (CI/CD).
-- Chaining request (POST → GET → PUT → DELETE).
-- Menguji API dengan autentikasi (Basic Auth, Bearer Token).
-- Menangani negative test & error handling.  
+## 🎯 Learning Target
+- Understand the basics of HTTP (methods, status codes) and JSON.
+- Use Postman to create collections and assertions.
+- Perform data-driven testing using CSV or JSON files.
+- Validate API response schemas.
+- Run automated tests using Newman (CLI).
+- Generate JSON/HTML test reports.
+- Integrate automated tests with GitHub Actions (CI/CD).
+- Chain multiple requests (POST → GET → PUT → DELETE).
+- Test APIs with authentication (Basic Auth, Bearer Token).
+- Handle negative test cases and error responses.
 
 ---
 
@@ -42,7 +42,7 @@ Membangun portofolio pembelajaran QA Automation & API Testing dari dasar **API**
 ---
 
 ## ⚠️ Known Issues / Limitations
-- ReqRes API kadang mengembalikan 429 Too Many Requests jika dipanggil dari GitHub Actions runner (karena public IP rate-limited).
+- The ReqRes API sometimes returns 429 Too Many Requests when called from a GitHub Actions runner (because the public IP is rate-limited).
 
 ---
 
@@ -53,4 +53,4 @@ Membangun portofolio pembelajaran QA Automation & API Testing dari dasar **API**
 
 ---
 
-✨ Stay tuned untuk update tiap minggu!  
+✨ Stay tuned for every week's update!  
