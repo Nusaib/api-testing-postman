@@ -35,7 +35,11 @@ Project goals:
 ---
 
 ## ✅ Result
+
+### Basic Login Test
 ![Login test report screenshot](screenshots/login.png)
+
+### Login with Positive & Negative Test Case
 ![Login hands-on test report screenshot](screenshots/login_handson.png)
 
 - All requests returned **passed** status as expected.
