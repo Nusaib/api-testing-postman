@@ -11,6 +11,14 @@ Project goals:
 
 ---
 
+## 🧪 Learning Objectives
+- Dasar Playwright Test
+- Positive & Negative Test Case
+- Report HTML interaktif
+- Screenshot & Video playback
+
+---
+
 ## 🛠️ Tools
 - Playwright v1.56.1
 - Dummy system: https://saucedemo.com
@@ -27,7 +35,8 @@ Project goals:
 ---
 
 ## ✅ Result
-![Playwright Report Screenshot](screenshots/login.png)
+![Login test report screenshot](screenshots/login.png)
+![Login hands-on test report screenshot](screenshots/login_handson.png)
 
 - All requests returned **passed** status as expected.
 
